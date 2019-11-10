@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.Collections;
+
 import java.util.List;
 
 @RestController()
@@ -20,8 +20,8 @@ public class ImagesController {
     private ImageStore imageStore;
 
     @GetMapping("meta")
-    public List<ImageMeta> listImages() {
-		return Collections.emptyList();
+    public List<ImageMeta> listImages() {  	
+		return imageStore.getAllMetaDatas();
     }
 
     @GetMapping("preview/{id}")
