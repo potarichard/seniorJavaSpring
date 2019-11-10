@@ -34,7 +34,7 @@ public class ImageMeta
 	@Column(name="MIMETYPE")
 	private String mimeType;
 	
-	@Column(name="DIGITALSIGN")
+	@Column(name="DIGITALSIGN", length = 1024)
 	private String digitalSign;
 	
 	@Lob
