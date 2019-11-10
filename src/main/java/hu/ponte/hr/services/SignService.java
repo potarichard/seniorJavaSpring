@@ -9,6 +9,7 @@ import java.security.interfaces.RSAPrivateKey;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.Base64;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import hu.ponte.hr.controller.ImageMeta;
@@ -16,10 +17,11 @@ import hu.ponte.hr.controller.ImageMeta;
 @Service
 public class SignService {
 
+	@Value("${private_key}")
+	String private_key_path;
+	
 	public void sign(ImageMeta img)
-	{		
-		String private_key_path = "src/main/resources/config/keys/key.private";
-		
+	{				
 		try 
 		{
 			PrivateKey pk = getPrivateKeyFromFile(private_key_path);		
@@ -30,8 +32,6 @@ public class SignService {
 			byte[] signedData = signature.sign();
 			
 			String encoded_sign = Base64.getEncoder().encodeToString(signedData);
-			
-//			System.out.println(encoded_sign.length());
 			
 			img.setDigitalSign(encoded_sign);
 		} 
