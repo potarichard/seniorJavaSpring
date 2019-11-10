@@ -1,6 +1,10 @@
 package hu.ponte.hr.services;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,13 +31,11 @@ public class ImageStore {
 	}
 
 
-
-
 	public List<ImageMeta> getAllMetaDatas(){
 		return img_meta_dao.findAll();
 	}
 	
-	public ImageMeta saveImgMetaData(MultipartFile file) {
+	public ImageMeta saveImg(MultipartFile file) {
 		
 		ImageMeta img = new ImageMeta();
 		
@@ -41,8 +43,37 @@ public class ImageStore {
 		img.setName(name.substring(0, name.indexOf(".")));
 		img.setMimeType(file.getContentType());
 		
+		try 
+		{
+			img.setData(file.getBytes());
+		} 
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		sign_service.sign(img);
 		
 		return img_meta_dao.save(img);		
 	}
+
+	public void previewImg(String id, HttpServletResponse resp) {
+		
+		Optional<ImageMeta> img = img_meta_dao.findById(id);
+		
+		byte[] datas = img.get().getData();
+		
+		try 
+		{
+			resp.setContentType(img.get().getMimeType());
+			resp.getOutputStream().write(datas);
+		} 
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
 }
+
+
+
+

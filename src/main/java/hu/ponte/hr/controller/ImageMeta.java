@@ -4,9 +4,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -33,6 +36,10 @@ public class ImageMeta
 	
 	@Column(name="DIGITALSIGN")
 	private String digitalSign;
+	
+	@Lob
+	@JsonIgnore
+	private byte[] data;
 	
 	@Transient
 	private long size;
@@ -61,6 +68,12 @@ public class ImageMeta
 	}
 	public void setDigitalSign(String digitalSign) {
 		this.digitalSign = digitalSign;
+	}	
+	public byte[] getData() {
+		return data;
+	}
+	public void setData(byte[] data) {
+		this.data = data;
 	}
 	public long getSize() {
 		return size;

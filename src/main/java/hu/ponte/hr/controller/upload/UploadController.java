@@ -13,22 +13,15 @@ import hu.ponte.hr.services.ImageStore;
 @Component
 @RequestMapping("api/file")
 public class UploadController
-{
-	private final long MAX_SIZE = 2097152;
-	
+{	
 	@Autowired
     private ImageStore imageStore;
 	
 
     @RequestMapping(value = "post", method = RequestMethod.POST)
     @ResponseBody
-    public String handleFormUpload(@RequestParam("file") MultipartFile file) {    	
-    	
-    	if(file != null && file.getSize() > MAX_SIZE)
-    		return "redirect:error";
-    	else
-    		imageStore.saveImgMetaData(file);    	
-    	
+    public String handleFormUpload(@RequestParam("file") MultipartFile file) {  
+    	imageStore.saveImg(file);  
         return "ok";
     }
 }

@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
-
 import java.util.List;
 
 @RestController()
@@ -25,7 +24,8 @@ public class ImagesController {
     }
 
     @GetMapping("preview/{id}")
-    public void getImage(@PathVariable("id") String id, HttpServletResponse response) {
+    public void getImage(@PathVariable("id") String id, HttpServletResponse resp) {
+    	imageStore.previewImg(id, resp);    	
 	}
 
 }
