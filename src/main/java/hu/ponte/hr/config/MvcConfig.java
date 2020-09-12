@@ -12,21 +12,20 @@ import org.springframework.web.servlet.resource.PathResourceResolver;
 import java.io.IOException;
 
 @Configuration
-public class MvcConfig implements WebMvcConfigurer
+public class MvcConfig implements WebMvcConfigurer							// useful component, connect the built frontend static files to the spring app
 {
 
-	public void addViewControllers(ViewControllerRegistry registry)
-	{
-		registry.addViewController("/login").setViewName("login");
+	public void addViewControllers(ViewControllerRegistry registry)	{
+		registry.addViewController("/login").setViewName("login");			// hovever no login template present in the project....
 	}
 
 	@Override
-	public void addResourceHandlers(ResourceHandlerRegistry registry)
+	public void addResourceHandlers(ResourceHandlerRegistry registry)		// all these are for the built app, maven build will take care, that these folders, and files will be there
 	{
 		//static files
 		registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
 
-		//vue spa serve
+		//vue spa serve, config static resources path explicitly, set cache to 0, or No cahce,
 		registry
 			.addResourceHandler("/ui/**/*.css", "/ui/**/*.html", "/ui/**/*.js", "/ui/**/*.jsx", "/ui/**/*.png", "/ui/**/*.ttf", "/ui/**/*.woff", "/ui/**/*.woff2")
 			.setCachePeriod(0)
@@ -38,6 +37,9 @@ public class MvcConfig implements WebMvcConfigurer
 			.resourceChain(true)
 			.addResolver(new PathResourceResolver() {
 				@Override
+				//	call localhost:8080/ui  /ui is the resource path, get resource from class path resource [javascript/iq/index.html] location for this url
+				// if it exists (the resource found, then return the resource
+				// if we call starts with /ui then return this resource, else ex: it starts with /asd than dont load this resource
 				protected Resource getResource(String resourcePath, Resource location) throws IOException
 				{
 					String baseApiPath = "/ui";
@@ -51,7 +53,7 @@ public class MvcConfig implements WebMvcConfigurer
 	}
 
 	@Override
-	public void addCorsMappings(CorsRegistry registry) {
+	public void addCorsMappings(CorsRegistry registry) {			// when frontend run from development server, cors call needed to be enabled
 		registry.addMapping("/**")
 			.allowedOrigins("*")
 			.allowedMethods(HttpMethod.GET.name(), HttpMethod.POST.name())

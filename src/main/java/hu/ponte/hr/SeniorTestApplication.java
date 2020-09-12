@@ -10,7 +10,9 @@ import org.springframework.boot.autoconfigure.websocket.servlet.WebSocketServlet
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableAsync;
 
-@EnableAsync
+// maven build 1st, to trigger javascipt build and get javascript resources
+
+@EnableAsync		// can use @Async in components methods, to run asycnhronously
 @SpringBootApplication(scanBasePackages = "hu.ponte.hr", exclude = {
 	MultipartAutoConfiguration.class
 })

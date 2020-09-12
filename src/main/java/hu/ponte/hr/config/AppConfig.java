@@ -20,7 +20,8 @@ public class AppConfig
 	}
 
 	@Bean(name = "multipartResolver")
-	public CommonsMultipartResolver multipartResolver() {
+	public CommonsMultipartResolver multipartResolver() {										// servlet based multipart resolver, so exactly config servlets multipart stuff, 
+																								// config on server, when multipart comes in, it checks file size
 		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
 		multipartResolver.setMaxUploadSize(2097152);
 		return multipartResolver;

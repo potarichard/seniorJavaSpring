@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController()
-@RequestMapping("api/images")
+@RequestMapping("api/images")				// frontend communicates with this url on server
 public class ImagesController {
 
     @Autowired
@@ -24,7 +24,7 @@ public class ImagesController {
     }
 
     @GetMapping("preview/{id}")
-    public void getImage(@PathVariable("id") String id, HttpServletResponse resp) {
+    public void getImage(@PathVariable("id") String id, HttpServletResponse resp) {		// image writed to the resp outputstream!
     	imageStore.previewImg(id, resp);    	
 	}
 

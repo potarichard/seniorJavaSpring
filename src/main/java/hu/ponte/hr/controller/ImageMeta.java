@@ -25,7 +25,7 @@ public class ImageMeta
 	@Column(name="ID")
 	@Id 
 	@GeneratedValue(generator="system-uuid")
-	@GenericGenerator(name="system-uuid", strategy = "uuid")
+	@GenericGenerator(name="system-uuid", strategy = "uuid")		// like nodeJS uuid, random char sequence as id
 	private String id;
 	
 	@Column(name="NAME")

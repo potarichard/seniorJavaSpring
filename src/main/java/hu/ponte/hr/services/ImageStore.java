@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,11 @@ public class ImageStore {
 	}
 
 
+	@PostConstruct
+	public void init(){
+	     System.out.println("upload files");
+	}
+	
 	public List<ImageMeta> getAllMetaDatas(){
 		return img_meta_dao.findAll();
 	}
